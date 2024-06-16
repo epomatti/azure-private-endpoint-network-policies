@@ -13,3 +13,7 @@ variable "allowed_public_ip_address" {
 variable "vm001_network_interface_id" {
   type = string
 }
+
+variable "asg_private_endpoints_ids" {
+  type = list(string)
+}

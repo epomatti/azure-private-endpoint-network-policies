@@ -40,19 +40,27 @@ module "vm001" {
   size                = var.vm_size
 }
 
+module "iam" {
+  source             = "./modules/iam"
+  vm001_principal_id = module.vm001.principal_id
+  storage001_id      = module.storage_001.storage_account_id
+  storage002_id      = module.storage_002.storage_account_id
+}
+
+### Network Security ###
+module "asg" {
+  source              = "./modules/asg"
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+}
+
 module "nsg" {
   source                     = "./modules/nsg"
   resource_group_name        = azurerm_resource_group.default.name
   location                   = azurerm_resource_group.default.location
   allowed_public_ip_address  = var.allowed_public_ip_address
   vm001_network_interface_id = module.vm001.network_interface_id
-}
-
-module "iam" {
-  source             = "./modules/iam"
-  vm001_principal_id = module.vm001.principal_id
-  storage001_id      = module.storage_001.storage_account_id
-  storage002_id      = module.storage_002.storage_account_id
+  asg_private_endpoints_ids  = [module.asg.id]
 }
 
 ### Storage ###
@@ -70,13 +78,6 @@ module "storage_002" {
   location                  = azurerm_resource_group.default.location
   workload                  = "${local.workload_alphanum}002"
   allowed_public_ip_address = var.allowed_public_ip_address
-}
-
-### Application Security Group ###
-module "asg" {
-  source              = "./modules/asg"
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
 }
 
 ### Private Link ###
