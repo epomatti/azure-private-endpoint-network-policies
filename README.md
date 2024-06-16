@@ -1,5 +1,6 @@
-# azure-private-endpoint-network-policies
+# Azure Private Endpoints security
 
+Protecting outbound traffic by using Application Security Groups (ASG) with Private Endpoints.
 
 > [!IMPORTANT]
 > The [documentation][1] defines the following:
@@ -8,7 +9,20 @@
 > [!NOTE]
 > Network Security Group rules using application security groups may only be applied when the ASGs are associated with network interfaces on the same virtual network.
 
+## Infrastructure
 
+Create the `.auto.tfvars` file and add your public IP:
+
+```terraform
+allowed_public_ip_address = "you IP"
+```
+
+Create the resources:
+
+```sh
+terraform init
+terraform apply -auto-approve
+```
 
 ## Testing
 
