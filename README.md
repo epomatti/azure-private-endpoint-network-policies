@@ -1,7 +1,7 @@
 # azure-private-endpoint-network-policies
 
 
-> [!NFO]
+> [!IMPORTANT]
 > The [documentation][1] defines the following:
 > > This setting only applies to private endpoints in the subnet and affects all private endpoints in the subnet. For other resources in the subnet, access is controlled based on security rules in the network security group.
 
