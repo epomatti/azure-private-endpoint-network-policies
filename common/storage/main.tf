@@ -1,3 +1,7 @@
+locals {
+  file = "foo.txt"
+}
+
 resource "azurerm_storage_account" "default" {
   name                          = "st${var.workload}"
   resource_group_name           = var.resource_group_name
@@ -15,4 +19,18 @@ resource "azurerm_storage_account" "default" {
     # virtual_network_subnet_ids = [var.subnet_id]
     bypass = ["AzureServices"]
   }
+}
+
+resource "azurerm_storage_container" "data" {
+  name                  = "data"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "foo" {
+  name                   = local.file
+  storage_account_name   = azurerm_storage_account.default.name
+  storage_container_name = azurerm_storage_container.data.name
+  type                   = "Block"
+  source                 = "${path.module}/files/${local.file}"
 }
