@@ -72,6 +72,13 @@ module "storage_002" {
   allowed_public_ip_address = var.allowed_public_ip_address
 }
 
+### Application Security Group ###
+module "asg" {
+  source              = "./modules/asg"
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+}
+
 ### Private Link ###
 module "privatelink" {
   source              = "./modules/private-link"
@@ -81,4 +88,6 @@ module "privatelink" {
   subnet_id           = module.vnet.vms_subnet_id
   storage001_id       = module.storage_001.storage_account_id
   storage002_id       = module.storage_002.storage_account_id
+
+  storage001_application_security_group_id = module.asg.id
 }

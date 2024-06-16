@@ -17,6 +17,8 @@ resource "azurerm_private_endpoint" "storage001" {
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id
 
+
+
   private_dns_zone_group {
     name = "storage001-blob-group"
 
@@ -33,6 +35,11 @@ resource "azurerm_private_endpoint" "storage001" {
   }
 
   depends_on = [azurerm_private_dns_zone_virtual_network_link.blob]
+}
+
+resource "azurerm_private_endpoint_application_security_group_association" "storage001" {
+  private_endpoint_id           = azurerm_private_endpoint.storage001.id
+  application_security_group_id = var.storage001_application_security_group_id
 }
 
 resource "azurerm_private_endpoint" "storage002" {

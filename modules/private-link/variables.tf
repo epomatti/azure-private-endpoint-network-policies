@@ -21,3 +21,7 @@ variable "storage001_id" {
 variable "storage002_id" {
   type = string
 }
+
+variable "storage001_application_security_group_id" {
+  type = string
+}
