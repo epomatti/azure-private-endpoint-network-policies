@@ -81,14 +81,14 @@ module "storage_002" {
 }
 
 ### Private Link ###
-# module "privatelink" {
-#   source              = "./modules/private-link"
-#   location            = azurerm_resource_group.default.location
-#   resource_group_name = azurerm_resource_group.default.name
-#   vnet_id             = module.vnet.vnet_id
-#   subnet_id           = module.vnet.vms_subnet_id
-#   storage001_id       = module.storage_001.storage_account_id
-#   storage002_id       = module.storage_002.storage_account_id
+module "privatelink" {
+  source              = "./modules/private-link"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  vnet_id             = module.vnet.vnet_id
+  subnet_id           = module.vnet.pes_subnet_id
+  storage001_id       = module.storage_001.storage_account_id
+  storage002_id       = module.storage_002.storage_account_id
 
-#   storage001_application_security_group_id = module.asg.id
-# }
+  storage001_application_security_group_id = module.asg.id
+}
