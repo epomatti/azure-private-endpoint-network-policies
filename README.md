@@ -36,10 +36,10 @@ Attempt to connect to the storages. Storage `001` should work, and storage `002`
 
 ```sh
 # This should work
-az storage blob list --auth-mode login --account-name stcontosos35001 --container data
+az storage blob list --auth-mode login --account-name <storage001> --container data
 
 # This should fail
-az storage blob list --auth-mode login --account-name stcontosos35002 --container data
+az storage blob list --auth-mode login --account-name <storage002> --container data
 ```
 
 Additionally, test the connectivity to the SQL Database via Private Link.
