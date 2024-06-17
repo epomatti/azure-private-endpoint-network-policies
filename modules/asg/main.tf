@@ -3,3 +3,9 @@ resource "azurerm_application_security_group" "storage001" {
   location            = var.location
   resource_group_name = var.resource_group_name
 }
+
+resource "azurerm_application_security_group" "database" {
+  name                = "asg-database"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}

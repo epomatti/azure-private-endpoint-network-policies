@@ -14,6 +14,10 @@ variable "vm001_network_interface_id" {
   type = string
 }
 
-variable "asg_private_endpoints_ids" {
+variable "asg_storage_private_endpoints_ids" {
+  type = list(string)
+}
+
+variable "asg_database_private_endpoints_ids" {
   type = list(string)
 }

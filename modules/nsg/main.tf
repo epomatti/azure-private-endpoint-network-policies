@@ -23,7 +23,7 @@ resource "azurerm_network_security_rule" "inbound_allow_ssh" {
   network_security_group_name = azurerm_network_security_group.vm001.name
 }
 
-resource "azurerm_network_security_rule" "outbound_allow_asg" {
+resource "azurerm_network_security_rule" "outbound_allow_storage_asg" {
   name                                       = "AllowASGStoragePrivateEndpoints"
   priority                                   = 400
   direction                                  = "Outbound"
@@ -32,7 +32,21 @@ resource "azurerm_network_security_rule" "outbound_allow_asg" {
   source_port_range                          = "*"
   destination_port_ranges                    = ["80", "443"]
   source_address_prefix                      = "*"
-  destination_application_security_group_ids = var.asg_private_endpoints_ids
+  destination_application_security_group_ids = var.asg_storage_private_endpoints_ids
+  resource_group_name                        = var.resource_group_name
+  network_security_group_name                = azurerm_network_security_group.vm001.name
+}
+
+resource "azurerm_network_security_rule" "outbound_allow_database_asg" {
+  name                                       = "AllowASGDatabasePrivateEndpoints"
+  priority                                   = 410
+  direction                                  = "Outbound"
+  access                                     = "Allow"
+  protocol                                   = "*"
+  source_port_range                          = "*"
+  destination_port_ranges                    = ["1433"]
+  source_address_prefix                      = "*"
+  destination_application_security_group_ids = var.asg_database_private_endpoints_ids
   resource_group_name                        = var.resource_group_name
   network_security_group_name                = azurerm_network_security_group.vm001.name
 }

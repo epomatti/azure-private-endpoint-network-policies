@@ -55,12 +55,13 @@ module "asg" {
 }
 
 module "nsg" {
-  source                     = "./modules/nsg"
-  resource_group_name        = azurerm_resource_group.default.name
-  location                   = azurerm_resource_group.default.location
-  allowed_public_ip_address  = var.allowed_public_ip_address
-  vm001_network_interface_id = module.vm001.network_interface_id
-  asg_private_endpoints_ids  = [module.asg.id]
+  source                             = "./modules/nsg"
+  resource_group_name                = azurerm_resource_group.default.name
+  location                           = azurerm_resource_group.default.location
+  allowed_public_ip_address          = var.allowed_public_ip_address
+  vm001_network_interface_id         = module.vm001.network_interface_id
+  asg_storage_private_endpoints_ids  = [module.asg.storage001_asg_id]
+  asg_database_private_endpoints_ids = [module.asg.database_asg_id]
 }
 
 ### SQL Server ###
@@ -100,7 +101,8 @@ module "privatelink" {
   subnet_id           = module.vnet.pes_subnet_id
   storage001_id       = module.storage_001.storage_account_id
   storage002_id       = module.storage_002.storage_account_id
+  mssql_server_id     = module.mssql.mssql_server_id
 
-  storage001_application_security_group_id = module.asg.id
-  mssql_server_id                          = module.mssql.mssql_server_id
+  storage001_application_security_group_id = module.asg.storage001_asg_id
+  database_application_security_group_id   = module.asg.database_asg_id
 }

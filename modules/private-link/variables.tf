@@ -29,3 +29,7 @@ variable "storage001_application_security_group_id" {
 variable "mssql_server_id" {
   type = string
 }
+
+variable "database_application_security_group_id" {
+  type = string
+}
