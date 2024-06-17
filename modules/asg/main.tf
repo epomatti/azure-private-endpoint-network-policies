@@ -9,3 +9,9 @@ resource "azurerm_application_security_group" "database" {
   location            = var.location
   resource_group_name = var.resource_group_name
 }
+
+resource "azurerm_application_security_group" "virtual_machine" {
+  name                = "asg-virtual-machine"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}

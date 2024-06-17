@@ -18,3 +18,6 @@ variable "size" {
   type = string
 }
 
+variable "asg_id" {
+  type = string
+}

@@ -21,3 +21,7 @@ variable "asg_storage_private_endpoints_ids" {
 variable "asg_database_private_endpoints_ids" {
   type = list(string)
 }
+
+variable "asg_virtual_machine_ids" {
+  type = list(string)
+}

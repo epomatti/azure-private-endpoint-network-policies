@@ -38,6 +38,7 @@ module "vm001" {
   location            = azurerm_resource_group.default.location
   subnet_id           = module.vnet.vms_subnet_id
   size                = var.vm_size
+  asg_id              = module.asg.virtual_machine_asg_id
 }
 
 module "iam" {
@@ -62,6 +63,7 @@ module "nsg" {
   vm001_network_interface_id         = module.vm001.network_interface_id
   asg_storage_private_endpoints_ids  = [module.asg.storage001_asg_id]
   asg_database_private_endpoints_ids = [module.asg.database_asg_id]
+  asg_virtual_machine_ids            = [module.asg.virtual_machine_asg_id]
 }
 
 ### SQL Server ###

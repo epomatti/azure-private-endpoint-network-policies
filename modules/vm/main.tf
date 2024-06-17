@@ -27,6 +27,11 @@ resource "azurerm_network_interface" "default" {
   }
 }
 
+resource "azurerm_network_interface_application_security_group_association" "default" {
+  network_interface_id          = azurerm_network_interface.default.id
+  application_security_group_id = var.asg_id
+}
+
 resource "azurerm_linux_virtual_machine" "default" {
   name                  = "vm-${var.workload}"
   resource_group_name   = var.resource_group_name
