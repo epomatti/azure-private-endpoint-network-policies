@@ -42,5 +42,7 @@ az storage blob list --auth-mode login --account-name stcontosos35001 --containe
 az storage blob list --auth-mode login --account-name stcontosos35002 --container data
 ```
 
+Additionally, test the connectivity to the SQL Database via Private Link.
+
 
 [1]: https://learn.microsoft.com/en-us/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal
