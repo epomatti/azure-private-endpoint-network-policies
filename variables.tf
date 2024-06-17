@@ -11,3 +11,13 @@ variable "vm_size" {
 variable "allowed_public_ip_address" {
   type = string
 }
+
+variable "mssql_sku_name" {
+  type    = string
+  default = "Basic"
+}
+
+variable "mssql_max_size_gb" {
+  type    = number
+  default = 2
+}

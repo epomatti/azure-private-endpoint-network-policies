@@ -63,6 +63,17 @@ module "nsg" {
   asg_private_endpoints_ids  = [module.asg.id]
 }
 
+### SQL Server ###
+module "mssql" {
+  source                    = "./modules/mssql"
+  workload                  = local.workload
+  resource_group_name       = azurerm_resource_group.default.name
+  location                  = azurerm_resource_group.default.location
+  sku                       = var.mssql_sku_name
+  max_size_gb               = var.mssql_max_size_gb
+  allowed_public_ip_address = var.allowed_public_ip_address
+}
+
 ### Storage ###
 module "storage_001" {
   source                    = "./common/storage"
@@ -91,4 +102,5 @@ module "privatelink" {
   storage002_id       = module.storage_002.storage_account_id
 
   storage001_application_security_group_id = module.asg.id
+  mssql_server_id                          = module.mssql.mssql_server_id
 }

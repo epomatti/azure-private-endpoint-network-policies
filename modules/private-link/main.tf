@@ -1,8 +1,15 @@
+### Zones ###
 resource "azurerm_private_dns_zone" "blob" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = var.resource_group_name
 }
 
+resource "azurerm_private_dns_zone" "database" {
+  name                = "privatelink.database.windows.net"
+  resource_group_name = var.resource_group_name
+}
+
+### Links ###
 resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
   name                  = "blob-link"
   resource_group_name   = var.resource_group_name
@@ -11,6 +18,15 @@ resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
   registration_enabled  = true
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "database" {
+  name                  = "sqlserver-link"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.database.name
+  virtual_network_id    = var.vnet_id
+  registration_enabled  = false
+}
+
+### Private Endpoints ###
 resource "azurerm_private_endpoint" "storage001" {
   name                = "pe-storage001"
   location            = var.location
@@ -64,4 +80,28 @@ resource "azurerm_private_endpoint" "storage002" {
   }
 
   depends_on = [azurerm_private_dns_zone_virtual_network_link.blob]
+}
+
+resource "azurerm_private_endpoint" "database" {
+  name                = "pe-sqlserver"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id           = var.subnet_id
+
+  private_dns_zone_group {
+    name = azurerm_private_dns_zone.database.name
+
+    private_dns_zone_ids = [
+      azurerm_private_dns_zone.database.id
+    ]
+  }
+
+  private_service_connection {
+    name                           = "sql-server"
+    private_connection_resource_id = var.mssql_server_id
+    is_manual_connection           = false
+    subresource_names              = ["sqlServer"]
+  }
+
+  depends_on = [azurerm_private_dns_zone_virtual_network_link.database]
 }
