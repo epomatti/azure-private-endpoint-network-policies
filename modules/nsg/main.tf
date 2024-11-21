@@ -51,6 +51,20 @@ resource "azurerm_network_security_rule" "outbound_allow_database_asg" {
   network_security_group_name                = azurerm_network_security_group.vm001.name
 }
 
+resource "azurerm_network_security_rule" "outbound_allow_microsoft_entra" {
+  name                                  = "AllowMicrosoftEntra"
+  priority                              = 420
+  direction                             = "Outbound"
+  access                                = "Allow"
+  protocol                              = "Tcp"
+  source_port_range                     = "*"
+  destination_port_ranges               = ["80", "443"]
+  source_application_security_group_ids = var.asg_virtual_machine_ids
+  destination_address_prefix            = "AzureActiveDirectory"
+  resource_group_name                   = var.resource_group_name
+  network_security_group_name           = azurerm_network_security_group.vm001.name
+}
+
 resource "azurerm_network_security_rule" "outbound_allow_internet" {
   name                                  = "AllowInternet"
   priority                              = 500
