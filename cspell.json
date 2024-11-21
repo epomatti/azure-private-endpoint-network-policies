@@ -4,7 +4,13 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
-        "brazilsouth"
+        "alphanum",
+        "azureuser",
+        "brazilsouth",
+        "contoso",
+        "noninteractive",
+        "osdisk",
+        "vnet"
     ],
     "ignoreWords": [],
     "import": []

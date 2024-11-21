@@ -1,5 +1,41 @@
 # Azure Private Endpoints security
 
+## Setup
+
+Create the `.auto.tfvars` file and add your public IP:
+
+```sh
+cp templates/local.tfvars .auto.tfvars
+```
+
+Get your origin IP:
+
+```sh
+curl ifconfig.me
+```
+
+Set up the required variables:
+
+```terraform
+subscription_id           = "00000000-0000-0000-0000-000000000000"
+allowed_public_ip_address = "1.2.3.4"
+```
+
+Create the temporary keys:
+
+```sh
+mkdir .keys && ssh-keygen -f .keys/temp_rsa
+```
+
+Create the resources:
+
+```sh
+terraform init
+terraform apply -auto-approve
+```
+
+## Private Endpoints
+
 Protecting outbound traffic by using Application Security Groups (ASG) with Private Endpoints.
 
 <img src=".assets/nsg-asg.png" />
@@ -11,20 +47,6 @@ Protecting outbound traffic by using Application Security Groups (ASG) with Priv
 > [!NOTE]
 > Network Security Group rules using application security groups may only be applied when the ASGs are associated with network interfaces on the same virtual network.
 
-## Infrastructure
-
-Create the `.auto.tfvars` file and add your public IP:
-
-```terraform
-allowed_public_ip_address = "you IP"
-```
-
-Create the resources:
-
-```sh
-terraform init
-terraform apply -auto-approve
-```
 
 ## Testing
 

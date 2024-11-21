@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.108.0"
+      version = "4.10.0"
     }
   }
 }
@@ -39,6 +39,8 @@ module "vm001" {
   subnet_id           = module.vnet.vms_subnet_id
   size                = var.vm_size
   asg_id              = module.asg.virtual_machine_asg_id
+  admin_username      = var.vm_admin_username
+  public_key_path     = var.vm_public_key_path
 }
 
 module "iam" {
@@ -95,7 +97,7 @@ module "storage_002" {
 }
 
 ### Private Link ###
-module "privatelink" {
+module "private_link" {
   source              = "./modules/private-link"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name

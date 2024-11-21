@@ -1,7 +1,3 @@
-locals {
-  username = "azureuser"
-}
-
 resource "azurerm_public_ip" "default" {
   name                = "pip-${var.workload}"
   resource_group_name = var.resource_group_name
@@ -37,8 +33,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   resource_group_name   = var.resource_group_name
   location              = var.location
   size                  = var.size
-  admin_username        = local.username
-  admin_password        = "P@ssw0rd.123"
+  admin_username        = var.admin_username
   network_interface_ids = [azurerm_network_interface.default.id]
   user_data             = filebase64("${path.module}/userdata/ubuntu.sh")
 
@@ -47,8 +42,8 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 
   admin_ssh_key {
-    username   = local.username
-    public_key = file("~/.ssh/id_rsa.pub")
+    username   = var.admin_username
+    public_key = file(var.public_key_path)
   }
 
   os_disk {
@@ -59,8 +54,8 @@ resource "azurerm_linux_virtual_machine" "default" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-arm64"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server-arm64"
     version   = "latest"
   }
 }

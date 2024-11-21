@@ -1,11 +1,21 @@
+variable "subscription_id" {
+  type = string
+}
+
 variable "location" {
-  type    = string
-  default = "eastus2"
+  type = string
 }
 
 variable "vm_size" {
-  type    = string
-  default = "Standard_B2pls_v2"
+  type = string
+}
+
+variable "vm_public_key_path" {
+  type = string
+}
+
+variable "vm_admin_username" {
+  type = string
 }
 
 variable "allowed_public_ip_address" {
@@ -13,11 +23,9 @@ variable "allowed_public_ip_address" {
 }
 
 variable "mssql_sku_name" {
-  type    = string
-  default = "Basic"
+  type = string
 }
 
 variable "mssql_max_size_gb" {
-  type    = number
-  default = 2
+  type = number
 }

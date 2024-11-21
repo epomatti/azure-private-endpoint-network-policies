@@ -21,3 +21,11 @@ variable "size" {
 variable "asg_id" {
   type = string
 }
+
+variable "public_key_path" {
+  type = string
+}
+
+variable "admin_username" {
+  type = string
+}
