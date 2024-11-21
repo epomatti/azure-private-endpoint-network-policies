@@ -38,7 +38,7 @@ terraform apply -auto-approve
 
 Protecting outbound traffic by using Application Security Groups (ASG) with Private Endpoints.
 
-<img src=".assets/nsg-asg.png" />
+<img src=".assets/nsg-asgv2.png" />
 
 > [!IMPORTANT]
 > The [documentation][1] defines the following:
