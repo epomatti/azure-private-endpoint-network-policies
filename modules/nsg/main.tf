@@ -64,6 +64,19 @@ resource "azurerm_network_security_rule" "outbound_allow_microsoft_entra" {
   resource_group_name                   = var.resource_group_name
   network_security_group_name           = azurerm_network_security_group.vm001.name
 }
+resource "azurerm_network_security_rule" "outbound_allow_azure_monitor" {
+  name                                  = "AllowAzureMonitor"
+  priority                              = 430
+  direction                             = "Outbound"
+  access                                = "Allow"
+  protocol                              = "Tcp"
+  source_port_range                     = "*"
+  destination_port_ranges               = ["80", "443"]
+  source_application_security_group_ids = var.asg_virtual_machine_ids
+  destination_address_prefix            = "AzureMonitor"
+  resource_group_name                   = var.resource_group_name
+  network_security_group_name           = azurerm_network_security_group.vm001.name
+}
 
 resource "azurerm_network_security_rule" "outbound_allow_internet" {
   name                                  = "AllowInternet"
